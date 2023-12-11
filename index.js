@@ -1,5 +1,5 @@
 import { ApiPromise, HttpProvider, Keyring } from '@polkadot/api'
-import { deposit } from './mod';
+import { dot_deposit, ksm_deposit } from './mod';
 
 const BASE_URL='https://polkadot-asset-hub-rpc.polkadot.io/'
 
@@ -11,14 +11,17 @@ export const magicApi = () => {
 const uwrap = (type) => {
   const hex = type.toHex();
   const len = type.encodedLength;
-  const dep = deposit(1, len) / 100
+  const dot_dep = dot_deposit(1, len) / 100
+  const ksm_dep = ksm_deposit(1, len) / 100
 
   return {
     len,
     hex,
     byteLength: hex.length,
-    deposit: dep,
-    human: dep / 1e10
+    dot_deposit: dot_dep,
+    dot_human: dot_dep / 1e10,
+    ksm_deposit: ksm_dep,
+    ksm_human: ksm_dep / 1e12
   }
 }
 
