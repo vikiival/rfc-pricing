@@ -1,0 +1,17 @@
+{
+  "name": "rfc-pricing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": [],
+  "author": "Viki Val",
+  "license": "ISC",
+  "dependencies": {
+    "@polkadot/api": "^10.11.1",
+    "vitest": "^1.0.4"
+  }
+}
