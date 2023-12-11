@@ -11,7 +11,9 @@
   "author": "Viki Val",
   "license": "ISC",
   "dependencies": {
-    "@polkadot/api": "^10.11.1",
+    "@polkadot/api": "^10.11.1"
+  },
+  "devDependencies": {
     "vitest": "^1.0.4"
   }
 }
