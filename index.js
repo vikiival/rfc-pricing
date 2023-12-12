@@ -1,5 +1,6 @@
 import { ApiPromise, HttpProvider, Keyring } from '@polkadot/api'
-import { dot_deposit, ksm_deposit } from './mod';
+import { dot_deposit } from './polkadot';
+import { ksm_deposit } from './kusama';
 
 const BASE_URL='https://polkadot-asset-hub-rpc.polkadot.io/'
 
