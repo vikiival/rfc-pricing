@@ -1,6 +1,6 @@
 import { ApiPromise, HttpProvider, Keyring } from '@polkadot/api'
-import { dot_deposit } from './polkadot';
-import { ksm_deposit } from './kusama';
+import { deposit as polkadotDeposit } from './polkadot';
+import { deposit as kusamaDeposit } from './kusama';
 
 const BASE_URL='https://polkadot-asset-hub-rpc.polkadot.io/'
 
@@ -12,8 +12,8 @@ export const magicApi = () => {
 const uwrap = (type) => {
   const hex = type.toHex();
   const len = type.encodedLength;
-  const dot_dep = dot_deposit(1, len) / 100
-  const ksm_dep = ksm_deposit(1, len) / 100
+  const dot_dep = polkadotDeposit(1, len) / 100
+  const ksm_dep = kusamaDeposit(1, len) / 100
 
   return {
     len,
