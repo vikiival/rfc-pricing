@@ -9,25 +9,31 @@ export const magicApi = () => {
   return ApiPromise.create({ provider });
 };
 
-const uwrap = (type) => {
+// options = {
+//   chain,
+//   price
+// }
+
+const uwrap = (type, options) => {
   const hex = type.toHex();
   const len = type.encodedLength;
-  const dot_dep = polkadotDeposit(1, len) / 100
-  const ksm_dep = kusamaDeposit(1, len) / 100
+  const chain = options?.chain || 'dot';
+  const human = chain === 'dot' ? 1e10 : 1e12;
+  const deposit = chain ? polkadotDeposit : kusamaDeposit;
+  const dep = deposit(1, len) / 100
 
   return {
     len,
     hex,
+    chain,
     byteLength: hex.length,
-    dot_deposit: dot_dep,
-    dot_human: dot_dep / 1e10,
-    ksm_deposit: ksm_dep,
-    ksm_human: ksm_dep / 1e12
+    deposit: dep,
+    human: dep / human,
   }
 }
 
 
-export async function calculateCollectionDeposit() {
+export async function calculateCollectionDeposit(chain = 'dot') {
   const api = await magicApi();
   // pub struct CollectionDetails<AccountId, DepositBalance> {
   //   /// Collection's owner.
@@ -53,11 +59,11 @@ export async function calculateCollectionDeposit() {
     attributes: 2
   })
 
-  return uwrap(type)
+  return uwrap(type, { chain })
 
 }
 
-export async function calculateTokenDeposit() {
+export async function calculateTokenDeposit(chain = 'dot') {
   const api = await magicApi();
   // pub struct ItemDetails<AccountId, Deposit, Approvals> {
   //   /// The owner of this item.
@@ -78,11 +84,11 @@ export async function calculateTokenDeposit() {
     }
   })
 
-  return uwrap(type)
+  return uwrap(type, { chain })
 
 }
 
-export async function calculateCollectionMetadataDeposit() {
+export async function calculateCollectionMetadataDeposit(chain = 'dot') {
   const api = await magicApi();
 
   const type = api.createType('PalletNftsCollectionMetadata', {
@@ -90,10 +96,10 @@ export async function calculateCollectionMetadataDeposit() {
     data: 'bafkreia5pv3ve7dgvuyc24ylvx6ajuycz4ziku6fepc4j3fn6uzb6kvzrm'
   })
 
-  return uwrap(type)
+  return uwrap(type, { chain })
 }
 
-export async function calculateTokenMetadataDeposit() {
+export async function calculateTokenMetadataDeposit(chain = 'dot') {
     const api = await magicApi();
   
   const type = api.createType('PalletNftsItemMetadata', {
@@ -104,14 +110,14 @@ export async function calculateTokenMetadataDeposit() {
     data: 'ipfs://bafkreiergyzyxi4qn22sb627e6kyc7o7zrlg5w7f6nmuffwnamuepdohvq'
   })
 
-  return uwrap(type)
+  return uwrap(type, { chain })
 }
 
 export function calculateAttributeDeposit(api) {
   null
 }
 
-export async function calculateCollectionConfig() {
+export async function calculateCollectionConfig(chain = 'dot') {
   const api = await magicApi();
   
   const type = api.createType('PalletNftsCollectionConfig', {
@@ -128,5 +134,5 @@ export async function calculateCollectionConfig() {
   
   )
 
-  return uwrap(type)
+  return uwrap(type, { chain })
 }
