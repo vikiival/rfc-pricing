@@ -19,7 +19,7 @@ const uwrap = (type, options) => {
   const len = type.encodedLength;
   const chain = options?.chain || 'dot';
   const human = chain === 'dot' ? 1e10 : 1e12;
-  const deposit = chain ? polkadotDeposit : kusamaDeposit;
+  const deposit = chain === 'dot' ? polkadotDeposit : kusamaDeposit;
   const dep = deposit(1, len) / 100
 
   return {
